@@ -67,13 +67,29 @@ const Auth = () => {
   };
 
   const handleSignup = async () => {
-    if (validateSignup()) {
-      const response = await api.post(
-        SIGNUP_ROUTE,
-        { email, password },
-        { withCredentials: true }
-      );
-      console.log({ response });
+    try {
+      if (validateSignup()) {
+        const response = await api.post(
+          SIGNUP_ROUTE,
+          { email, password },
+          { withCredentials: true }
+        );
+        if (response.status === 201) {
+          navigate('/profile');
+          toast.success('Usuário criado com sucesso!');
+        }
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 409) {
+          toast.error(error.response.data);
+        } else {
+          toast.error('Ocorreu um erro ao criar o usuário');
+        }
+      } else {
+        toast.error('Erro na comunicação com o servidor');
+      }
+      console.log(error);
     }
   };
 

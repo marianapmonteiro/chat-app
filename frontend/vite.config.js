@@ -4,6 +4,7 @@ import { defineConfig } from "vite"
 
 export default defineConfig({
   plugins: [react()],
+  reactStrictMode: false,
   resolve: {
     alias: {
       // eslint-disable-next-line no-undef

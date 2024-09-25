@@ -16,20 +16,25 @@ export const signup = async (request, response, next) => {
         if (!email || !password) {
             return response.status(400).send("Email and password is required.")
         }
-        const user = await User.create({ email, password });
-        response.cookie("jwt", createToken(email, user.id), {
-            maxAge,
-            secure: true,
-            sameSite: "None"
-        });
-        return response.status(201).json({
-            user: {
-                id: user.id,
-                email: user.email,
-                profileSetup: user.profileSetup
-            }
-        })
+        const userExists = await User.findOne({ email: email });
 
+        if (userExists) {
+            return response.status(409).send("Email already in use.")
+        } else {
+            const user = await User.create({ email, password });
+            response.cookie("jwt", createToken(email, user.id), {
+                maxAge,
+                secure: true,
+                sameSite: "None"
+            });
+            return response.status(201).json({
+                user: {
+                    id: user.id,
+                    email: user.email,
+                    profileSetup: user.profileSetup
+                }
+            })
+        }
     } catch (error) {
         console.log({ error });
         return response.status(500).send("Internal Server Error ")
@@ -159,7 +164,6 @@ export const addProfileImage = async (request, response, next) => {
     }
 }
 export const removeProfileImage = async (request, response, next) => {
-
     try {
         const { userId } = request
 
@@ -178,5 +182,14 @@ export const removeProfileImage = async (request, response, next) => {
     } catch (error) {
         return response.status(500).send("Internal Server Error")
     }
+}
 
+export const logout = async (request, response, next) => {
+    try {
+        response.cookie("jwt", "", { maxAge: 1, secure: true, sameSite: "None" });
+        return response.status(200).send("Logout Succesfully.")
+
+    } catch (error) {
+        return response.status(500).send("Internal Server Error")
+    }
 }
