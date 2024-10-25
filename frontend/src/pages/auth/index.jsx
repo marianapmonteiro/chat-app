@@ -8,6 +8,7 @@ import { LOGIN_ROUTE, SIGNUP_ROUTE } from '@/utils/constants';
 import { useAppStore } from '@/store/index';
 import { useNavigate } from 'react-router-dom';
 
+
 const Auth = () => {
   const navigate = useNavigate();
   const { setUserInfo } = useAppStore();
@@ -49,22 +50,25 @@ const Auth = () => {
 
   const handleLogin = async () => {
     if (validateLogin()) {
-      const response = await api.post(
-        LOGIN_ROUTE,
-        { email, password },
-        { withCredentials: true }
-      );
-      if (response.data.user.id) {
-        setUserInfo(response.data.user);
-        if (response.data.user.profileSetup) {
-          navigate('/chat');
-        } else {
-          navigate('/profile');
+    try{
+        const response = await api.post(
+            LOGIN_ROUTE,
+            { email, password },
+            { withCredentials: true }
+          );
+          if (response.data.user.id) {
+            setUserInfo(response.data.user);
+            if (response.data.user.profileSetup) {
+              navigate('/chat');
+            } else {
+              navigate('/profile');
+            }
+          }
         }
-      }
-      console.log({ response });
+    catch(error){
+        toast.error(error.response.data.error)
     }
-  };
+  }}
 
   const handleSignup = async () => {
     try {
@@ -123,8 +127,9 @@ const Auth = () => {
             </TabsList>
             <TabsContent
               value="login"
-              className="w-full flex flex-col gap-6 mt-8 items-center justify-center"
+              className="w-full mt-8"
             >
+            <form onSubmit={(e)=>{{handleLogin()}; e.preventDefault()}} className="w-full flex flex-col gap-6 items-center justify-center">
               <Input
                 className="xs:w-full md:w-[80%] lg:w-[50%] placeholder:text-white placeholder:text-opacity-40 text-white bg-[#3c5869] bg-opacity-25 rounded-[12px] border-none focus-visible:ring-offset-0 focus-visible:ring-0"
                 value={email}
@@ -143,12 +148,13 @@ const Auth = () => {
                   setPassword(e.target.value);
                 }}
               />
-              <Button
+              <Button type="submit"
                 className="xs:w-full md:w-[80%] lg:w-[50%] bg-blue-700 hover:bg-blue-900"
-                onClick={handleLogin}
+                // onClick={handleLogin}
               >
                 Login
               </Button>
+              </form>
             </TabsContent>
             <TabsContent
               value="signup"

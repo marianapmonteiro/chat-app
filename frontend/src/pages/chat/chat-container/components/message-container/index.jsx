@@ -2,12 +2,33 @@ import { useRef, useEffect } from 'react';
 import { useAppStore } from '@/store';
 import moment from 'moment/moment';
 import { colorsBg } from '@/lib/utils.js';
+import { GET_ALL_MESSAGES_ROUTE } from '@/utils/constants';
+import api from '@/lib/api';
 
 const MessageContainer = () => {
   const scrollRef = useRef();
-  const { selectedChatType, selectedChatData, selectedChatMessages, userInfo } =
+  const { selectedChatType, selectedChatData, selectedChatMessages, setSelectedChatMessages ,userInfo } =
     useAppStore();
 
+    useEffect(() => {
+        const getMessages = async()=>{
+            try{
+                const response = await api.post(GET_ALL_MESSAGES_ROUTE,{id: selectedChatData._id}, {withCredentials: true});
+                if(response.data.messages){
+                    setSelectedChatMessages(response.data.messages)
+                }
+            }catch(error){
+                console.log({error})
+            }
+        }
+        if(selectedChatData._id){
+            if(selectedChatType === "contact"){
+                getMessages();
+            }
+            console.log("selectedChatData", selectedChatData)
+        }
+    }, [selectedChatData, selectedChatType, selectedChatMessages])
+    
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -17,7 +38,7 @@ const MessageContainer = () => {
   const renderMessages = () => {
     let lastDate = null;
     return selectedChatMessages.map((message, index) => {
-      const messageDate = moment(message.timestamp).format('YYYY-MM-DD');
+      const messageDate = moment(message.timeStamp).format('YYYY-MM-DD');
       const showDate = messageDate !== lastDate;
       lastDate = messageDate;
       return (
@@ -38,7 +59,7 @@ const MessageContainer = () => {
     return (
       <div
         className={`${
-          message.sender._id === selectedChatData._id
+          message.sender === selectedChatData._id
             ? 'text-left'
             : 'text-right'
         } `}
@@ -48,7 +69,7 @@ const MessageContainer = () => {
             className="border inline-block p-4 rounded my-1 max-w-[50%] break-words"
             style={{
               backgroundColor:
-                message.sender._id !== selectedChatData._id
+                message.sender !== selectedChatData._id
                   ? colorsBg[userInfo.color]
                   : '#2a2b33',
             }}

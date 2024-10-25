@@ -14,12 +14,12 @@ export const signup = async (request, response, next) => {
     try {
         const { email, password } = request.body;
         if (!email || !password) {
-            return response.status(400).send("Email and password is required.")
+            return response.status(400).send({error:"Email and password is required."})
         }
         const userExists = await User.findOne({ email: email });
 
         if (userExists) {
-            return response.status(409).send("Email already in use.")
+            return response.status(409).send({error:"Email already in use."})
         } else {
             const user = await User.create({ email, password });
             response.cookie("jwt", createToken(email, user.id), {
@@ -45,18 +45,18 @@ export const login = async (request, response, next) => {
     try {
         const { email, password } = request.body;
         if (!email || !password) {
-            return response.status(400).send("Email and password is required.")
+            return response.status(400).send({error:"Email and password is required."})
         }
         const user = await User.findOne({ email });
 
         if (!user) {
-            return response.status(404).send("User with the given email not found.")
+            return response.status(404).send({error:"User with the given email not found."})
         }
 
         const auth = await compare(password, user.password);
 
         if (!auth) {
-            return response.status(400).send("Password is incorrect.")
+            return response.status(400).send({error:"Password is incorrect."})
         }
 
         response.cookie("jwt", createToken(email, user.id), {

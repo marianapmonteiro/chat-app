@@ -92,7 +92,7 @@ const NewDm = () => {
           <div>
             <Input
               placeholder="Search Contacts"
-              className="rounded-lg p-6 border-none bg-[#2c2e3b]"
+              className={`rounded-lg p-6 border-none ${mode === 'dark' ? "bg-[#2c2e3b]" : "bg-[#f8f9ff]"}`}
               onChange={(e) => searchContacts(e.target.value)}
             />
           </div>
@@ -149,7 +149,7 @@ const NewDm = () => {
                 height={100}
                 options={AnimationDefaultOptions}
               />
-              <div className="text-opacity-80 text-white mt-5 flex flex-col gap-5 items-center lg:text-2xl text-xl transition-all duration-300 text-center ">
+              <div className={`text-opacity-80 ${mode === 'dark' ? "text-white" : "text-black"} mt-5 flex flex-col gap-5 items-center lg:text-2xl text-xl transition-all duration-300 text-center`}>
                 <h3>
                   Hi! Search for a{' '}
                   <span
