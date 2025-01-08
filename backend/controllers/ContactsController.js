@@ -86,3 +86,30 @@ export const getContactsForDmList = async (request, response, next) => {
         return response.status(500).send("Internal Server Error")
     }
 }
+
+export const addFriend = async (request, response) => {
+    const user = await User.findById(request.body.userId);
+    const friend = await User.findById(request.body.friendId);
+     try {
+         if(!friend){
+             return response.status(404).send("Usuário não encontrado")
+         }
+         user.friends.push(friend);
+         await user.save();
+         return response.status(200).send("Convite enviado com sucesso.")
+     } catch (error) {
+         return response.status(400).send("Erro ao adicionar um amigo", error)
+     }
+
+};
+
+export const getFriends = async (request, response) => {
+    try {
+        const userid = request.userId;
+        const user = await User.findById(userid).populate("friends");
+        const userFriends = user.friends
+        return response.status(200).json({ userFriends });
+    } catch (error) {
+        return response.status(400).send("erro:", error)
+    }
+};

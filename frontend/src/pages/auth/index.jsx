@@ -158,7 +158,7 @@ const Auth = () => {
             </TabsContent>
             <TabsContent
               value="signup"
-              className="w-full flex flex-col gap-6 items-center justify-center"
+              className="w-full flex flex-col gap-6 mt-8 items-center justify-center"
             >
               <Input
                 className="xs:w-full md:w-[80%] lg:w-[50%] placeholder:text-white placeholder:text-opacity-40 text-white bg-[#3c5869] bg-opacity-25 rounded-[12px] border-none focus-visible:ring-offset-0 focus-visible:ring-0"

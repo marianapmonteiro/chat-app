@@ -51,13 +51,14 @@ const NewDm = () => {
   };
 
   const selectNewContact = async (contact) => {
+    // console.log("contato clicado", contact)
     setOpenNewContactModal(false);
     setSelectedChatType('contact');
     setSelectedChatData(contact);
     setSearchedContacts([]);
   };
 
-  console.log('contacts', searchedContacts);
+//   console.log('contacts', searchedContacts);
   return (
     <>
       <TooltipProvider>

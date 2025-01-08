@@ -1,13 +1,34 @@
 import { useAppStore } from '@/store';
 import { RiCloseFill } from 'react-icons/ri';
+import { IoPersonAddSharp } from "react-icons/io5";
 import { getColor } from '@/lib/utils';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { HOST } from '@/utils/constants';
+import {ADD_FRIEND_ROUTE} from  '@/utils/constants';
+import api from '@/lib/api';
+import { toast } from 'sonner';
 
 const ChatHeader = () => {
-  const { mode, closeChat, selectedChatData, selectedChatType } = useAppStore();
+  const { mode, closeChat, selectedChatData, selectedChatType, userInfo } = useAppStore();
   // ${
   //   mode === 'dark' ? ' border-white' : 'border-[#2f303b]'}
+
+  console.log("user info", userInfo)
+
+  const addFriend = async() =>{
+    const userId =  userInfo.id;
+    const friendId = selectedChatData._id
+    try {
+        const response = await api.post(ADD_FRIEND_ROUTE, {userId, friendId}, {withCredentials: true});
+         toast.success(response.data)
+        
+    } catch (error) {
+        const errorMessage = error.response?.data || "Erro ao adicionar amigo.";
+        toast.error(errorMessage);
+    }
+
+}
+
   return (
     <div
       className={`h-[10vh] w-full border-b-[1px]
@@ -43,6 +64,14 @@ const ChatHeader = () => {
           </div>
         </div>
         <div className="flex items-center justify-center gap-5">
+        <button
+            className={`${
+              mode === 'dark' ? 'text-white ' : 'text-neutral-500'
+            } focus:border-none focus:outline-none focus:text-white duration-300 transition-all`}
+            onClick={addFriend}
+          >
+            <IoPersonAddSharp className="text-2xl" />
+          </button>
           <button
             className={`${
               mode === 'dark' ? 'text-white ' : 'text-neutral-500'

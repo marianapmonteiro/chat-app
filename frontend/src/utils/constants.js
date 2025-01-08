@@ -10,8 +10,11 @@ export const REMOVE_PROFILE_IMAGE_ROUTE = `${AUTH_ROUTES}/remove-profile-image`;
 export const LOGOUT_ROUTE = `${AUTH_ROUTES}/logout`;
 
 export const CONTACTS_ROUTES = "/api/contacts";
+
 export const SEARCH_CONTACTS_ROUTE = `${CONTACTS_ROUTES}/search`
 export const GET_CONTACTS_ROUTES = `${CONTACTS_ROUTES}/get-contacts-for-dm`
+export const ADD_FRIEND_ROUTE =  `${CONTACTS_ROUTES}/add-friend`
+export const GET_FRIENDS_ROUTES = `${CONTACTS_ROUTES}/get-friends`
 
 
 export const MESSAGES_ROUTES = `api/messages`;

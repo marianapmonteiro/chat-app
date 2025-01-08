@@ -9,7 +9,6 @@ const MessageContainer = () => {
   const scrollRef = useRef();
   const { selectedChatType, selectedChatData, selectedChatMessages, setSelectedChatMessages ,userInfo } =
     useAppStore();
-
     useEffect(() => {
         const getMessages = async()=>{
             try{
@@ -25,7 +24,7 @@ const MessageContainer = () => {
             if(selectedChatType === "contact"){
                 getMessages();
             }
-            console.log("selectedChatData", selectedChatData)
+            // console.log("selectedChatData", selectedChatData)
         }
     }, [selectedChatData, selectedChatType, selectedChatMessages])
     
@@ -55,7 +54,7 @@ const MessageContainer = () => {
   };
 
   const renderDMMessages = (message) => {
-    console.log('msg', message);
+    // console.log('msg', message);
     return (
       <div
         className={`${
