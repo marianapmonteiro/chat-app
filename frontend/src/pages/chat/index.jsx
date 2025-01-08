@@ -23,7 +23,7 @@ import { Button } from '@/components/ui/button';
 import { getColor, themes, colors } from '@/lib/utils';
 
 const Chat = () => {
-  const { userInfo, theme, setTheme, setMode, selectedChatType } =
+  const { mode, userInfo, theme, setTheme, setMode, selectedChatType } =
     useAppStore();
   const navigate = useNavigate();
   const [backgroundImg, setBackgroundImg] = useState('/chat-background.jpg');
@@ -87,22 +87,25 @@ const Chat = () => {
             style={{ color: theme }}
           />
         </DialogTrigger>
-        <DialogContent className="bg-[#1b1c24]">
+        <DialogContent className={`bg-[#1b1c24] ${mode === 'dark' ? 'bg-slate-950' : 'bg-white'
+              } ${mode === 'dark' ? 'text-white' : 'text-black'}`}>
           <DialogHeader className="text-white">
-            <DialogTitle>SETTINGS</DialogTitle>
+            <DialogTitle className={`${mode === 'dark' ? 'text-white' : 'text-black' }`}>SETTINGS</DialogTitle>
             <DialogDescription>
               Make changes to your profile here. Click save when you’re done.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-2 items-center gap-4">
-              <Label htmlFor="background" className="col-span-2 text-white">
+              <Label htmlFor="background" className={`col-span-2 ${mode === 'dark' ? 'text-white' : 'text-black' }`} >
                 Background Image:
               </Label>
               <Input
                 id="background"
                 type="file"
-                className="bg-[#444758] col-span-2 border-none"
+                className={`col-span-2 border-none ${
+                    mode === 'dark' ? 'bg-slate-600' : 'bg-slate-200' 
+                  } ${mode === 'dark' ? 'text-white' : 'text-pink'}`}
                 onChange={changeBackgroundImg} // Corrige para usar onChange
               />
             </div>
@@ -116,8 +119,10 @@ const Chat = () => {
                   return (
                     <div
                       style={{ backgroundColor: color.color }}
-                      className={`h-8 w-8 rounded-full cursor-pointer transition-all duration-300 ${
-                        selectedIndex === index ? 'outline outline-white' : ''
+                      className={`h-8 w-8 rounded-full cursor-pointer transition-all ${
+                        selectedIndex === index
+                          ? `outline ${mode === 'dark' ? 'outline-white' : 'outline-black'}`
+                          : ''
                       }`}
                       key={index}
                       onClick={() => {

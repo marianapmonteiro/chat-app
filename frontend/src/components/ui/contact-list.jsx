@@ -9,6 +9,7 @@ const ContactList = ({ contacts, isChannel = false }) => {
   const [error, setError] = useState(null);
   const [contactList, setContactList] = useState([]);
   const {
+    mode,
     userInfo,
     setSelectedChatType,
     setSelectedChatData,
@@ -46,7 +47,7 @@ const ContactList = ({ contacts, isChannel = false }) => {
   return (
     <div className="px-11 pt-4">
       {error ? (
-        <div className="error-message">{error}</div>
+        <div className={`my-2 ${mode === 'dark' ? 'text-white' : 'text-gray-600' } `}>{error}</div>
       ) : (
         <ul className="space-y-2">
           {contactList.map((contact) => (

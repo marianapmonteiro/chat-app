@@ -13,8 +13,6 @@ const ChatHeader = () => {
   // ${
   //   mode === 'dark' ? ' border-white' : 'border-[#2f303b]'}
 
-  console.log("user info", userInfo)
-
   const addFriend = async() =>{
     const userId =  userInfo.id;
     const friendId = selectedChatData._id
@@ -55,10 +53,11 @@ const ChatHeader = () => {
                     ? selectedChatData.firstName.split('').shift()
                     : selectedChatData.email.split('').shift()}
                 </div>
+           
               )}
             </Avatar>
           </div>
-          <div>
+          <div className={`${mode === 'dark' ? 'text-white' : 'text-gray-600'}`}>
             {selectedChatType === 'contact' &&
               `${selectedChatData.firstName} ${selectedChatData.lastName}`}
           </div>

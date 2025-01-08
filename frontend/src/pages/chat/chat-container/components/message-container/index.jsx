@@ -7,7 +7,7 @@ import api from '@/lib/api';
 
 const MessageContainer = () => {
   const scrollRef = useRef();
-  const { selectedChatType, selectedChatData, selectedChatMessages, setSelectedChatMessages ,userInfo } =
+  const { mode, selectedChatType, selectedChatData, selectedChatMessages, setSelectedChatMessages ,userInfo } =
     useAppStore();
     useEffect(() => {
         const getMessages = async()=>{
@@ -43,7 +43,7 @@ const MessageContainer = () => {
       return (
         <div key={index}>
           {showDate && (
-            <div className="text-center text-gray-500 my-2">
+            <div className={`text-center my-2 ${mode === 'dark' ? 'text-white' : 'text-gray-600' } `}>
               {moment(message.timestamp).format('LL')}
             </div>
           )}
@@ -76,7 +76,7 @@ const MessageContainer = () => {
             {message.content}
           </div>
         )}
-        <div className="text-xs text-gray-600">
+        <div className={`text-xs ${mode === 'dark' ? 'text-white' : 'text-gray-600' } `}>
           {moment(message.timestamp).format('LT')}
         </div>
       </div>

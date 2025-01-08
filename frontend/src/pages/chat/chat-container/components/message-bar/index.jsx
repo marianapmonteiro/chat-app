@@ -42,7 +42,7 @@ const MessageBar = () => {
     }
   };
   return (
-    <div className="h-[10vh] bg-transparent flex justify-center items-center px-10 bottom-0 ">
+    <div className="h-[10vh] bg-transparent flex justify-center items-center px-10 bottom-0 mb-4 ">
       <div
         className={`flex-1 flex ${
           mode === 'dark' ? 'bg-[#2a2b33]' : 'bg-[#dadbe0]'
@@ -86,7 +86,7 @@ const MessageBar = () => {
         )} rounded-md flex items-center justify-center p-5 focus:border-none focus:outline-none  duration-300 transition-all`}
         onClick={handleSendMessage}
       >
-        <IoSend className="text-2xl text-white" />
+        <IoSend  className={`text-2xl ${mode === 'dark' ? 'text-white' : 'text-gray-600' } `} />
       </button>
     </div>
   );

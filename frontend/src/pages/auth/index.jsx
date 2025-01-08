@@ -86,7 +86,7 @@ const Auth = () => {
     } catch (error) {
       if (error.response) {
         if (error.response.status === 409) {
-          toast.error(error.response.data);
+          toast.error(error.response.data.error);
         } else {
           toast.error('Ocorreu um erro ao criar o usuário');
         }

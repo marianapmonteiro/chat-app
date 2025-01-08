@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
+import { useAppStore } from '@/store';
 import NewDm from './components/new-dm';
 import ProfileInfo from './components/profile-info';
 import api from '@/lib/api';
 import { GET_CONTACTS_ROUTES } from '@/utils/constants';
-import { useAppStore } from '@/store';
 import ContactList from '@/components/ui/contact-list';
+import { getColor } from '@/lib/utils';
+
 
 const ContactsContainer = () => {
-    const {setDirectMessageContacts, directMessagesContacts} = useAppStore()
+    const {setDirectMessageContacts, directMessagesContacts, userInfo} = useAppStore();
+    
     useEffect(() => {
         const getContacts = async() => {
             const response = await api.get(GET_CONTACTS_ROUTES, {
@@ -23,7 +26,7 @@ const ContactsContainer = () => {
   return (
     <div className="relative md:w-[35vw] lg:w-[30vw] xl:w-[20vw] bg-transparent border-r-[1px] border-neutral-400 h-[100%]">
       <div className="pt-3 pl-10">
-        <h1>Logo</h1>
+        <h1 className={`font-bold text-xl py-2 border-none pointer-events-none text-${getColor(userInfo.color)}`}>ChatApp</h1>
       </div>
       <div className="my-5">
         <div className="flex items-center justify-between pr-10">
