@@ -31,7 +31,12 @@
 ![image](https://github.com/user-attachments/assets/f8b837f1-5678-4830-b62b-e5bc964a8a19)
 
 ### Tela Chat
+#### Modo claro
 ![image](https://github.com/user-attachments/assets/512817fc-1f49-4c85-bd73-280207783748)
+#### Modo dark
+![image](https://github.com/user-attachments/assets/76ba662e-7fae-458e-a839-ec090df2af4c)
+
+
 
 
 
