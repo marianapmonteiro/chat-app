@@ -31,7 +31,9 @@
 ![image](https://github.com/user-attachments/assets/f8b837f1-5678-4830-b62b-e5bc964a8a19)
 
 ### Tela Chat
-![image](https://github.com/user-attachments/assets/ec77c876-333a-42a8-bfb4-21c0433176db)
+![image](https://github.com/user-attachments/assets/512817fc-1f49-4c85-bd73-280207783748)
+
+
 
 ## Como Executar o Projeto
 
