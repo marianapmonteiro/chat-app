@@ -17,7 +17,7 @@
 ## Funcionalidades:
 - **Autenticação de Usuários**: Tela de login e cadastro com validação.
 - **Mensagens em Tempo Real**: Troca instantânea de mensagens usando Socket.IO.
-- **Interface Amigável**: Design responsivo com foco na experiência do usuário.
+- **Interface Amigável**: Design com foco na experiência do usuário.
 - **Gerenciamento de Estado**: Estados globais otimizados com Zustand.
 
 ## Prints das Telas
