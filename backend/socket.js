@@ -5,11 +5,17 @@ const setupSocket = (server) => {
 
     const io = new SocketIOServer(server, {
         cors: {
-            origin: process.env.ORIGIN,
-            methods: ["GET", "POST"],
-            credentials: true,
+            origin: (origin, callback) => {
+                // Permite qualquer origem, incluindo null para requests locais
+                if (!origin || origin === "null") {
+                    return callback(null, true);
+                }
+                callback(null, origin);
+            },
+            methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+            credentials: true, 
         }
-    })
+    });
 
     const userSocketMap = new Map();
 
