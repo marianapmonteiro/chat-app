@@ -16,10 +16,16 @@ const port = process.env.PORT || 3001;
 const databaseURL = process.env.DATABASE_URL;
 
 app.use(cors({
-    origin: process.env.ORIGIN,
+    origin: (origin, callback) => {
+        // Permite qualquer origem, incluindo null para requests locais
+        if (!origin || origin === "null") {
+            return callback(null, true);
+        }
+        callback(null, origin);
+    },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    credentials: true,
-}))
+    credentials: true, // Permite envio de cookies e headers protegidos
+}));
 
 app.use("/uploads/profiles", express.static("uploads/profiles"))
 

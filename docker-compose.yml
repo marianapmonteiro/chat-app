@@ -1,0 +1,52 @@
+services:
+
+  mongo:
+    container_name: chatapp-mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-volume:/data/db
+    restart: always
+
+  frontend:
+    container_name: chatapp-front
+    build: ./frontend
+    restart: always
+    ports:
+      - 5173:5173
+    depends_on:
+      - mongo
+    env_file:
+      - ./frontend/.env
+    volumes:
+      - front-volume:/var/www/html
+
+  backend:
+    container_name: chatapp-back
+    build: ./backend
+    restart: always
+    ports:
+      - 8747:8747
+    depends_on:
+      - mongo
+    env_file:
+      - ./backend/.env
+
+  nginx:
+    container_name: nginx-chatapp
+    build: ./nginx
+    ports: 
+      - 80:80
+      - 443:443
+    volumes: 
+      - front-volume:/var/www/html
+
+    depends_on:
+      - mongo
+      - backend
+      - frontend
+
+volumes:
+  mongodb-volume:
+  front-volume:
